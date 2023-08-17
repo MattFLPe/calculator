@@ -1,4 +1,14 @@
-/*
+ 
+
+
+const numberButtons = document.querySelectorAll('[data-number]')
+const operationButtons = document.querySelectorAll('[data-operation]')
+const equalsButton = document.querySelector('[data-equals]')
+const deleteButton = document.querySelector('[data-delete]')
+const allClearButton = document.querySelector('[data-all-clear]')
+const previousDisplayOperand = document.querySelector('[data-previous-operand]')
+const currentDisplayOperand = document.querySelector('[data-current-operand]')
+
 function add(a, b) {
     return a + b;
 }
@@ -15,52 +25,55 @@ function divide(a, b) {
     return a / b;
 }
 
-function operate(a, b, operator){
-switch(operator) {
-    case "+":
-    return add(a, b);
-    case "-":
-    return add(a, b);
-    case "*":
-    return multiply(a, b);
-    case "/":
-    return divide(a, b);
-}
-}
+let currentNum = '';
+let previousNum = '';
+let operator  = '';
+    
+    numberButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            handleNumber(e.target.textContent);
+        });
+    });
 
+    function handleNumber(number) {
+        if (currentNum.length <= 11) {
+            currentNum += number;
+            currentDisplayOperand.textContent = currentNum;
+        }
+    }
 
-function populateDisplay(){
-}
-*/
-class Calculator {
-    constructor(previousOperandTextElement, currentOperandTextElement)
-    this.previousOperandTextElement = previousOperandTextElement
-    this.currentOperandTextElement = currentOperandTextElement
-    this.clear()
-}
+    operationButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            handleOperator(e.target.textContent);
+        });
+    });
 
-const numberButtons = document.querySelectorAll('[data-number]')
-const operationButtons = document.querySelectorAll('[data-operation]')
-const equalsButton = document.querySelector('[data-equals]')
-const deleteButton = document.querySelector('[data-delete]')
-const allClearButton = document.querySelector('[data-all-clear]')
-const previousOperandTextElement = document.querySelector('[data-previous-operand]')
-const currentOperandTextElement = document.querySelector('[data-current-operand]')
+    function handleOperator(op) {
+        operator = op;
+        previousNum = currentNum;
+        previousDisplayOperand.textContent = previousNum + " " + operator;
+        currentNum = ""; 
+        currentDisplayOperand.textContent = "";
+    }
 
-function clear() {
-}
+    function operate(a, b, op){
+        switch(op) {
+            case "+":
+            return ;
+            break;
+            case "-":
+            return subtract(a, b);
+            break;
+            case "*":
+            return multiply(a, b);
+            break;
+            case "/":
+            return divide(a, b);
+            break;
+        }
+        }
 
-function deleteBtn() {
-}
+equalsButton.addEventListener('click', (e) => {
 
-function appendNumber(number) {
-}
+})
 
-function chooseOperation(operation) {
-}
-
-function compute() {
-}
-
-function updateDisplay() {
-}
