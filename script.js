@@ -9,6 +9,8 @@ const currentDisplayOperand = document.querySelector('[data-current-operand]')
 let currentNum = '';
 let previousNum = '';
 let operator  = '';
+
+    window.addEventListener('keydown', handleKeyPress)
     
     numberButtons.forEach(button => {
         button.addEventListener('click', (e) => {
@@ -99,7 +101,6 @@ let operator  = '';
         });
 
         allClearButton.addEventListener('click', clearCalculator)
-
         function clearCalculator() {
             currentNum = "";
             previousNum = "";
@@ -109,11 +110,44 @@ let operator  = '';
         }
          
         decimalButton.addEventListener('click', addDecimal)        
-
         function addDecimal(){
             if(!currentNum.includes('.')){
                 currentNum += "."
                 currentDisplayOperand.textContent = currentNum;
             }
-
         }
+
+        function handleKeyPress(e) {
+            e.preventDefault()
+            if(e.key >= 0 && e.key <= 9) {
+                handleNumber(e.key)
+            }
+            if(e.key === "Enter" || 
+            e.key === "=" && currentNum != "" && previousNum != "")
+            {
+                operate(operator);
+            }
+            if(e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/"){
+                handleOperator(e.key)
+            }
+            if(e.key === "."){
+                addDecimal()
+            }
+            if(e.key === "Backspace"){
+                handleDelete(e.key)
+            }
+        }
+
+        function handleDelete() {
+            if(currentNum != ""){
+                currentNum = currentNum.slice(0, -1);
+                currentDisplayOperand.textContent = currentNum;
+                if(currentNum === ""){
+                currentDisplayOperand.textContent = "0";
+                }
+            }
+            if(currentNum === "" && previousNum != "" && operator === ""){
+                previousNum = previousNum.slice(0, -1)
+                currentDisplayOperand.textContent = previousNum;
+            }
+        }   
